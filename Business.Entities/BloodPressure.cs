@@ -12,11 +12,14 @@ namespace Business.Entities
     // mm Hg for both Systolic and Diastolic
     public record BloodPressure(int Systolic, int Diastolic)
     {
-        public BloodPressureCategory Category => Systolic < 120 && Diastolic < 80 ? BloodPressureCategory.Normal :
-                                                  Systolic < 129 && Diastolic < 80 ? BloodPressureCategory.Elevated :
-                                                  Systolic < 139 && Diastolic < 89 ? BloodPressureCategory.HypertensionStage1 :
-                                                  Systolic < 180 && Diastolic < 110 ? BloodPressureCategory.HypertensionStage2 :
-                                                  BloodPressureCategory.HypertensiveCrisis;
+        public BloodPressureCategory Category => this switch
+        {
+            BloodPressure { Systolic: < 120, Diastolic: < 80  } => BloodPressureCategory.Normal,
+            BloodPressure { Systolic: < 129, Diastolic: < 80  } => BloodPressureCategory.Elevated,
+            BloodPressure { Systolic: < 139, Diastolic: < 89  } => BloodPressureCategory.HypertensionStage1,
+            BloodPressure { Systolic: < 180, Diastolic: < 110 } => BloodPressureCategory.HypertensionStage2,
+            _ => BloodPressureCategory.HypertensiveCrisis,
+        };
     }
 
 }

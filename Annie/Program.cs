@@ -10,7 +10,7 @@ namespace Annie
         static void Main(string[] args)
         {
             var normalBloodPressure = new BloodPressure(110, 75);
-            var elevatedBloodPressure = new BloodPressure(128, 760);
+            var elevatedBloodPressure = new BloodPressure(128, 76);
             var hypertensionStage1 = new BloodPressure(135, 85);
             var hypertensionStage2 = new BloodPressure(142, 92);
             var hypertensiveCrisis = new BloodPressure(182, 115);
