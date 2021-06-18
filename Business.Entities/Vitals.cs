@@ -15,23 +15,25 @@ namespace Business.Entities
         // low bp
         public bool BradyCardia => this switch
         {
-            Vitals { Age: { IsCurrentlyPremature: true }, CurrentHeartRate: < 120 }     => true,
-            Vitals { Age: { Is3To6MonthsOfAge: true }, CurrentHeartRate: < 100 }        => true,
-            Vitals { Age: { Is6To12MonthsOfAge: true }, CurrentHeartRate: < 80 }        => true,
-            Vitals { Age: { Is1To3YearsOfAge: true }, CurrentHeartRate: < 70 }          => true,
-            Vitals { Age: { Is3To6YearsOfAge: true }, CurrentHeartRate: < 65 }          => true,
-            Vitals { Age: { Is6To12YearsOfAge: true }, CurrentHeartRate: < 60 }         => true,
-            Vitals { Age: { IsGreaterThan12YearsOfAge: true }, CurrentHeartRate: < 55 } => true,
+            Vitals { Age: { IsCurrentlyPremature: true, Is0To3MonthsOfAge: true }, CurrentHeartRate: < 120 }  => true,
+            Vitals { Age: { IsCurrentlyPremature: false, Is0To3MonthsOfAge: true }, CurrentHeartRate: < 100 } => true,
+            Vitals { Age: { Is3To6MonthsOfAge: true }, CurrentHeartRate: < 90 }                               => true,
+            Vitals { Age: { Is6To12MonthsOfAge: true }, CurrentHeartRate: < 80 }                              => true,
+            Vitals { Age: { Is1To3YearsOfAge: true }, CurrentHeartRate: < 70 }                                => true,
+            Vitals { Age: { Is3To6YearsOfAge: true }, CurrentHeartRate: < 65 }                                => true,
+            Vitals { Age: { Is6To12YearsOfAge: true }, CurrentHeartRate: < 60 }                               => true,
+            Vitals { Age: { IsGreaterThan12YearsOfAge: true }, CurrentHeartRate: < 55 }                       => true,
             _ => false
         };
 
         public bool TachyCardia => this switch
         {
-            Vitals { Age: { IsCurrentlyPremature: true }, CurrentHeartRate: > 150 }                        => true,
-            Vitals { Age: { Is3To6MonthsOfAge: true, Is6To12MonthsOfAge: true }, CurrentHeartRate: > 120 } => true,
-            Vitals { Age: { Is1To3YearsOfAge: true, Is3To6YearsOfAge: true }, CurrentHeartRate: > 110 }    => true,
-            Vitals { Age: { Is6To12YearsOfAge: true }, CurrentHeartRate: > 95 }                            => true,
-            Vitals { Age: { IsGreaterThan12YearsOfAge: true }, CurrentHeartRate: > 85 }                    => true,
+            Vitals { Age: { IsCurrentlyPremature: true, Is0To3MonthsOfAge: true }, CurrentHeartRate: > 170 }  => true,
+            Vitals { Age: { IsCurrentlyPremature: false, Is0To3MonthsOfAge: true }, CurrentHeartRate: > 150 } => true,
+            Vitals { Age: { Is3To6MonthsOfAge: true, Is6To12MonthsOfAge: true }, CurrentHeartRate: > 120 }    => true,
+            Vitals { Age: { Is1To3YearsOfAge: true, Is3To6YearsOfAge: true }, CurrentHeartRate: > 110 }       => true,
+            Vitals { Age: { Is6To12YearsOfAge: true }, CurrentHeartRate: > 95 }                               => true,
+            Vitals { Age: { IsGreaterThan12YearsOfAge: true }, CurrentHeartRate: > 85 }                       => true,
             _ => false
         };
 

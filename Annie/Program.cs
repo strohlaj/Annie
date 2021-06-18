@@ -36,11 +36,12 @@ namespace Annie
             Debug.Assert(hypertensiveCrisis.Category == BloodPressureCategory.HypertensiveCrisis);
 
 
-            // initial Vitals
+            // initial Vitals     HEART RATE AT 86 bpm
             var patientAaron = new Vitals(86, 65.7m, normalBloodPressure, new Age(new DateTime(1991, 06, 28)), new EndTidalCarbonDioxide(40), 97, 16);
-            Debug.Assert(!patientAaron.BradyCardia);
-            Debug.Assert(patientAaron.TachyCardia);
-            // Todo create and begin simulation logic.
+
+
+            Debug.Assert(!patientAaron.BradyCardia); // false
+            Debug.Assert(patientAaron.TachyCardia); // true
 
         }
         static List<Drug> GetAllDrugsSupply()
