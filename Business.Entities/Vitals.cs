@@ -13,31 +13,34 @@ namespace Business.Entities
         // 6-12 years: 60 -> 95
         // > 12 years: 55 -> 85
         // low bp
-        public bool BradyCardia => this switch
+        public bool BradyCardia => BradyCardiaThreshold.HasValue && CurrentHeartRate > BradyCardiaThreshold.Value;
+
+        public int? BradyCardiaThreshold => this switch
         {
-            Vitals { Age: { IsCurrentlyPremature: true, Is0To3MonthsOfAge: true }, CurrentHeartRate: < 120 }  => true,
-            Vitals { Age: { IsCurrentlyPremature: false, Is0To3MonthsOfAge: true }, CurrentHeartRate: < 100 } => true,
-            Vitals { Age: { Is3To6MonthsOfAge: true }, CurrentHeartRate: < 90 }                               => true,
-            Vitals { Age: { Is6To12MonthsOfAge: true }, CurrentHeartRate: < 80 }                              => true,
-            Vitals { Age: { Is1To3YearsOfAge: true }, CurrentHeartRate: < 70 }                                => true,
-            Vitals { Age: { Is3To6YearsOfAge: true }, CurrentHeartRate: < 65 }                                => true,
-            Vitals { Age: { Is6To12YearsOfAge: true }, CurrentHeartRate: < 60 }                               => true,
-            Vitals { Age: { IsGreaterThan12YearsOfAge: true }, CurrentHeartRate: < 55 }                       => true,
-            _ => false
+            Vitals { Age: { IsCurrentlyPremature: true, Is0To3MonthsOfAge: true } }  => 120,
+            Vitals { Age: { IsCurrentlyPremature: false, Is0To3MonthsOfAge: true } } => 100,
+            Vitals { Age: { Is3To6MonthsOfAge: true } }                              => 90,
+            Vitals { Age: { Is6To12MonthsOfAge: true } }                             => 80,
+            Vitals { Age: { Is1To3YearsOfAge: true } }                               => 70,
+            Vitals { Age: { Is3To6YearsOfAge: true } }                               => 65,
+            Vitals { Age: { Is6To12YearsOfAge: true } }                              => 60,
+            Vitals { Age: { IsGreaterThan12YearsOfAge: true } }                      => 55,
+            _ => null
         };
 
-        public bool TachyCardia => this switch
-        {
-            Vitals { Age: { IsCurrentlyPremature: true, Is0To3MonthsOfAge: true }, CurrentHeartRate: > 170 }  => true,
-            Vitals { Age: { IsCurrentlyPremature: false, Is0To3MonthsOfAge: true }, CurrentHeartRate: > 150 } => true,
-            Vitals { Age: { Is3To6MonthsOfAge: true, Is6To12MonthsOfAge: true }, CurrentHeartRate: > 120 }    => true,
-            Vitals { Age: { Is1To3YearsOfAge: true, Is3To6YearsOfAge: true }, CurrentHeartRate: > 110 }       => true,
-            Vitals { Age: { Is6To12YearsOfAge: true }, CurrentHeartRate: > 95 }                               => true,
-            Vitals { Age: { IsGreaterThan12YearsOfAge: true }, CurrentHeartRate: > 85 }                       => true,
-            _ => false
-        };
 
-        // Configurable based on age.
+        public bool TachyCardia => TachyCardiaThreshold.HasValue && CurrentHeartRate <= TachyCardiaThreshold.Value;
+
+        public int? TachyCardiaThreshold => this switch
+        {
+            Vitals { Age: { IsCurrentlyPremature: true, Is0To3MonthsOfAge: true } }  => 170,
+            Vitals { Age: { IsCurrentlyPremature: false, Is0To3MonthsOfAge: true } } => 150,
+            Vitals { Age: { Is3To6MonthsOfAge: true, Is6To12MonthsOfAge: true } }    => 120,
+            Vitals { Age: { Is1To3YearsOfAge: true, Is3To6YearsOfAge: true } }       => 110,
+            Vitals { Age: { Is6To12YearsOfAge: true } }                              => 95,
+            Vitals { Age: { IsGreaterThan12YearsOfAge: true } }                      => 85,
+            _ => null
+        };
 
         public int LowRespiratoryRateThreshold => 10;
         public int HighRespiratoryRateThreshold => 20;
